@@ -295,6 +295,13 @@
                         <span class="cart-count">0</span>
                     </a>
                 </div>
+                <button class="mobile-menu-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
             </div>
         </nav>
     </header>
@@ -606,5 +613,48 @@
         checkUserLogin();
         updateCartCount();
     </script>
+
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <span class="logo-icon">🍫</span>
+            <button class="mobile-menu-close" id="mobile-menu-close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu-user">
+            <a href="minha-conta.html">
+                <span>👤</span>
+                <span id="mobile-user-name">Minha Conta</span>
+            </a>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-nav-item">🏠 Início</a>
+            <a href="produtos.html" class="mobile-nav-item">🍫 Chocolates</a>
+            <div class="mobile-submenu">
+                <a href="produtos.html">Trufas</a>
+                <a href="produtos.html">Tabletes</a>
+                <a href="produtos.html">Bombons</a>
+            </div>
+            <a href="produtos.html" class="mobile-nav-item">🎁 Cestas</a>
+            <div class="mobile-submenu">
+                <a href="produtos.html">Café da Manhã</a>
+                <a href="produtos.html">Natal</a>
+                <a href="produtos.html">Aniversário</a>
+                <a href="produtos.html">Românticas</a>
+            </div>
+            <a href="produtos.html" class="mobile-nav-item">🥚 Páscoa</a>
+            <div class="mobile-submenu">
+                <a href="produtos.html">Ovos de Páscoa</a>
+                <a href="produtos.html">Infantis</a>
+                <a href="produtos.html">Adultos</a>
+            </div>
+            <a href="checkout.html" class="mobile-nav-item">🛒 Carrinho <span id="mobile-cart-count" style="background: #e74c3c; color: #fff; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; margin-left: 5px;">0</span></a>
+            <a href="https://wa.me/5511912345678?text=Ol%C3%A1%2C%20preciso%20de%20uma%20informa%C3%A7%C3%A3o" target="_blank" class="mobile-nav-item">📞 Contato</a>
+        </div>
+    </div>
 </body>
 </html>

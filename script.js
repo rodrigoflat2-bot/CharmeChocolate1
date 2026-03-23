@@ -262,3 +262,53 @@ document.addEventListener('keydown', function(e) {
         closeZoomModal();
     }
 });
+
+// Mobile Menu
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+function openMobileMenu() {
+    if (mobileMenu && mobileMenuOverlay) {
+        mobileMenu.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeMobileMenu() {
+    if (mobileMenu && mobileMenuOverlay) {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+}
+
+if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+}
+
+if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+}
+
+// Update mobile user name
+const currentUser = JSON.parse(localStorage.getItem('charmeCurrentUser'));
+const mobileUserName = document.getElementById('mobile-user-name');
+if (currentUser && mobileUserName) {
+    const firstName = currentUser.name.split(' ')[0];
+    mobileUserName.textContent = `Olá, ${firstName}`;
+}
+
+// Update mobile cart count
+const mobileCartCount = document.getElementById('mobile-cart-count');
+if (mobileCartCount) {
+    const cart = JSON.parse(localStorage.getItem('charmeCart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    mobileCartCount.textContent = totalItems;
+}
