@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Charme Chocolate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-cream) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .auth-container {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+        
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 30px;
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .auth-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .auth-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--bg-cream);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .auth-tab:hover {
+            color: var(--primary);
+        }
+        
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: -2px;
+        }
+        
+        .auth-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--bg-cream);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-group input.error {
+            border-color: #e74c3c;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.has-error .error-message {
+            display: block;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+        }
+        
+        .auth-form-content {
+            display: none;
+        }
+        
+        .auth-form-content.active {
+            display: block;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .login-loading {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .login-loading.show {
+            display: block;
+        }
+        
+        .login-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--bg-cream);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .login-loading p {
+            color: var(--text-medium);
+            font-size: 1rem;
+        }
+        
+        .password-input-wrapper {
+            position: relative;
+        }
+        
+        .password-input-wrapper input {
+            padding-right: 45px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            color: var(--text-light);
+        }
+        
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+        
+        .user-info {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .user-info .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--white);
+        }
+        
+        .user-info h2 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .user-info p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        
+        .btn-logout {
+            padding: 14px 30px;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-logout:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .forgot-password a {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="announcement-bar">
+            <p>🚚 Entregas apenas para São Paulo | Frete Grátis no estado! | Cupom <strong>PASCOA15</strong> para 15% OFF</p>
+        </div>
+        <nav class="nav-container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🍫</span>
+                    <span class="logo-text">Charme<span>Chocolate</span></span>
+                </a>
+                <div class="nav-actions">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <span class="welcome-message" id="welcome-message"></span>
+                    <a href="minha-conta.html" class="nav-link" id="account-link">Minha Conta</a>
+                    <a href="checkout.html" class="cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>🍫 Charme Chocolate</h1>
+                <p id="auth-title">Faça login ou crie sua conta</p>
+            </div>
+            
+            <div id="auth-content">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showTab('login')">Entrar</button>
+                    <button class="auth-tab" onclick="showTab('register')">Criar Conta</button>
+                </div>
+                
+                <div class="auth-form">
+                    <div class="success-message" id="success-message"></div>
+                    
+                    <div class="login-loading" id="login-loading">
+                        <div class="login-spinner"></div>
+                        <p>Entrando...</p>
+                    </div>
+                    
+                    <div class="auth-form-content active" id="login-form">
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label for="login-email">E-mail</label>
+                                <input type="email" id="login-email" placeholder="seu@email.com" required>
+                                <span class="error-message">E-mail ou senha incorretos</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Senha</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="login-password" placeholder="Sua senha" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword('login-password', this)">
+                                        <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                    </button>
+                                </div>
+                                <span class="error-message">E-mail ou senha incorretos</span>
+                            </div>
+                            <button type="submit" class="btn-auth" id="login-btn">Entrar</button>
+                            <div class="forgot-password">
+                                <a href="#" onclick="showTab('register'); return false;">Esqueceu sua senha?</a>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="auth-form-content" id="register-form">
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label for="register-name">Nome Completo</label>
+                                <input type="text" id="register-name" placeholder="Seu nome completo" required>
+                                <span class="error-message">Por favor, insira seu nome</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">E-mail</label>
+                                <input type="email" id="register-email" placeholder="seu@email.com" required>
+                                <span class="error-message">Este e-mail já está cadastrado</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Senha</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('register-password', this)">
+                                        <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                    </button>
+                                </div>
+                                <span class="error-message">A senha deve ter pelo menos 6 caracteres</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-confirm">Confirmar Senha</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="register-confirm" placeholder="Repita a senha" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword('register-confirm', this)">
+                                        <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                    </button>
+                                </div>
+                                <span class="error-message">As senhas não coincidem</span>
+                            </div>
+                            <button type="submit" class="btn-auth">Criar Conta</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-info" id="user-info" style="display: none;">
+                <div class="avatar">👤</div>
+                <h2 id="user-name"></h2>
+                <p id="user-email"></p>
+                <button class="btn-logout" onclick="handleLogout()">Sair</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="whatsapp-btn">
+        <a href="checkout.html">
+            <span>🛒</span>
+            <span class="cart-count-badge" id="floating-cart-count">0</span>
+        </a>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('charmeCart')) || [];
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = totalItems;
+            });
+            document.querySelectorAll('.cart-count-badge').forEach(el => {
+                el.textContent = totalItems;
+                el.style.display = totalItems > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        function checkUserLogin() {
+            const currentUser = JSON.parse(localStorage.getItem('charmeCurrentUser'));
+            const welcomeMessage = document.getElementById('welcome-message');
+            const accountLink = document.getElementById('account-link');
+            
+            if (currentUser && welcomeMessage) {
+                const firstName = currentUser.name.split(' ')[0];
+                welcomeMessage.textContent = `Olá, ${firstName}!`;
+                if (accountLink) {
+                    accountLink.textContent = 'Minha Conta';
+                }
+            }
+        }
+        
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('charmeUsers')) || [];
+        }
+        
+        function saveUsers(users) {
+            localStorage.setItem('charmeUsers', JSON.stringify(users));
+        }
+        
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem('charmeCurrentUser')) || null;
+        }
+        
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem('charmeCurrentUser', JSON.stringify(user));
+            } else {
+                localStorage.removeItem('charmeCurrentUser');
+            }
+        }
+        
+        function showTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form-content').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+                document.getElementById('auth-title').textContent = 'Faça login em sua conta';
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+                document.getElementById('auth-title').textContent = 'Crie sua conta';
+            }
+            
+            clearFormErrors();
+            hideSuccessMessage();
+        }
+        
+        function clearFormErrors() {
+            document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+            document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
+        }
+        
+        function showError(fieldId) {
+            const input = document.getElementById(fieldId);
+            input.classList.add('error');
+            input.parentElement.classList.add('has-error');
+        }
+        
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const eyeOpen = btn.querySelector('.eye-open');
+            const eyeClosed = btn.querySelector('.eye-closed');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'block';
+            } else {
+                input.type = 'password';
+                eyeOpen.style.display = 'block';
+                eyeClosed.style.display = 'none';
+            }
+        }
+        
+        function showSuccessMessage(message) {
+            const el = document.getElementById('success-message');
+            el.textContent = message;
+            el.classList.add('show');
+        }
+        
+        function hideSuccessMessage() {
+            document.getElementById('success-message').classList.remove('show');
+        }
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            clearFormErrors();
+            
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim().toLowerCase();
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name) {
+                showError('register-name');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('register-password');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showError('register-confirm');
+                return;
+            }
+            
+            const users = getUsers();
+            
+            if (users.find(u => u.email === email)) {
+                showError('register-email');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password
+            };
+            
+            users.push(newUser);
+            saveUsers(users);
+            
+            document.getElementById('register-form').classList.remove('active');
+            document.getElementById('login-loading').classList.add('show');
+            
+            setTimeout(() => {
+                setCurrentUser(newUser);
+                window.location.href = 'index.html';
+            }, 3000);
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            clearFormErrors();
+            
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+            
+            const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (!user) {
+                showError('login-email');
+                showError('login-password');
+                return;
+            }
+            
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('login-loading').classList.add('show');
+            document.getElementById('login-btn').disabled = true;
+            
+            setTimeout(() => {
+                setCurrentUser(user);
+                window.location.href = 'index.html';
+            }, 3000);
+        }
+        
+        function handleLogout() {
+            setCurrentUser(null);
+            window.location.href = 'conta.html';
+        }
+        
+        function checkAuth() {
+            const user = getCurrentUser();
+            const authContent = document.getElementById('auth-content');
+            const userInfo = document.getElementById('user-info');
+            
+            if (user) {
+                authContent.style.display = 'none';
+                userInfo.style.display = 'block';
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('auth-title').textContent = 'Minha Conta';
+            } else {
+                authContent.style.display = 'block';
+                userInfo.style.display = 'none';
+            }
+        }
+        
+        checkAuth();
+        checkUserLogin();
+        updateCartCount();
+    </script>
+</body>
+</html>

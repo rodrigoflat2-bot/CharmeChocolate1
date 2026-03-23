@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charme Chocolate - Chocolates Finos & Cestas Especiais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="announcement-bar">
+            <p>🚚 Entregas apenas para São Paulo | Frete Grátis no estado! | Cupom <strong>PASCOA15</strong> para 15% OFF</p>
+        </div>
+        <nav class="nav-container">
+            <div class="nav-wrapper">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🍫</span>
+                    <span class="logo-text">Charme<span>Chocolate</span></span>
+                </a>
+                <div class="nav-actions">
+                    <span class="welcome-message" id="welcome-message"></span>
+                    <a href="minha-conta.html" class="nav-link" id="account-link">Minha Conta</a>
+                    <a href="checkout.html" class="cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+            </div>
+            <div class="categories-bar">
+                <ul class="categories-list">
+                    <li class="category-item">
+                        <a href="produtos.html">Chocolates</a>
+                        <div class="submenu">
+                            <a href="produtos.html">Trufas</a>
+                            <a href="produtos.html">Tabletes</a>
+                            <a href="produtos.html">Bombons</a>
+                            <a href="produtos.html">Bolinhas</a>
+                        </div>
+                    </li>
+                    <li class="category-item">
+                        <a href="produtos.html">Cestas</a>
+                        <div class="submenu">
+                            <a href="produtos.html">Café da Manhã</a>
+                            <a href="produtos.html">Natal</a>
+                            <a href="produtos.html">Aniversário</a>
+                            <a href="produtos.html">Românticas</a>
+                        </div>
+                    </li>
+                    <li class="category-item">
+                        <a href="produtos.html">Páscoa</a>
+                        <div class="submenu">
+                            <a href="produtos.html">Ovos de Páscoa</a>
+                            <a href="produtos.html">Infantis</a>
+                            <a href="produtos.html">Adultos</a>
+                        </div>
+                    </li>
+                    <li class="category-item">
+                        <a href="https://wa.me/5511912345678?text=Ol%C3%A1%2C%20preciso%20de%20uma%20informa%C3%A7%C3%A3o" target="_blank">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-slider">
+                <div class="slide active" style="background: linear-gradient(135deg, #8B4513 0%, #D4A574 50%, #F5E6D3 100%);">
+                    <div class="slide-content">
+                        <span class="slide-tag">Nova Coleção</span>
+                        <h1>Páscoa 2026<br>Chegou!</h1>
+                        <p>Descubra os ovos de Páscoa mais deliciosos para surpreender quem você ama</p>
+                        <a href="#pascoa" class="btn btn-primary">Ver Coleção</a>
+                    </div>
+                    <div class="slide-image">
+                        <img src="https://i.ibb.co/tp4kdR5N/OVo-de-chocolate-ao-leite-rechado-com-brigadeiro-brawonie-e-morangos.jpg" alt="Ovos de Páscoa">
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(135deg, #C9A67A 0%, #E8D5B7 50%, #FFF8F0 100%);">
+                    <div class="slide-content">
+                        <span class="slide-tag">Promoção</span>
+                        <h1>Cestas Especiais<br>para Momentos Únicos</h1>
+                        <p>Cestas personalizadas para café da manhã, presentes e celebrações</p>
+                        <a href="#cestas" class="btn btn-primary">Conhecer</a>
+                    </div>
+                    <div class="slide-image">
+                        <img src="https://i.ibb.co/Y48Wpk7H/Cesta-de-caf-da-manha-Girasolis.jpg" alt="Cesta de café da manhã">
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(135deg, #5D3A1A 0%, #8B6914 50%, #D4AF37 100%);">
+                    <div class="slide-content">
+                        <span class="slide-tag">Frete Grátis</span>
+                        <h1>Chocolates<br>Artesanais</h1>
+                        <p>Feitos com amor e os melhores ingredientes selecionados</p>
+                        <a href="#chocolates" class="btn btn-primary">Ver Produtos</a>
+                    </div>
+                    <div class="slide-image">
+                        <img src="https://i.ibb.co/NcHGcHB/5d73167f545c861f2b3c0580bc0efead.jpg" alt="Chocolates artesanais">
+                    </div>
+                </div>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
+
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Momentos Doces</h2>
+                <p class="section-subtitle">Encontre o presente perfeito para cada ocasião</p>
+                <div class="categories-grid">
+                    <a href="#pascoa" class="category-card">
+                        <div class="category-img">
+                            <img src="https://i.ibb.co/tp4kdR5N/OVo-de-chocolate-ao-leite-rechado-com-brigadeiro-brawonie-e-morangos.jpg" alt="Páscoa">
+                        </div>
+                        <h3>Páscoa</h3>
+                        <span>Ver coleção →</span>
+                    </a>
+                    <a href="#cestas" class="category-card">
+                        <div class="category-img">
+                            <img src="https://i.ibb.co/Y48Wpk7H/Cesta-de-caf-da-manha-Girasolis.jpg" alt="Cestas">
+                        </div>
+                        <h3>Cestas</h3>
+                        <span>Ver coleção →</span>
+                    </a>
+                    <a href="#chocolates" class="category-card">
+                        <div class="category-img">
+                            <img src="https://i.ibb.co/NcHGcHB/5d73167f545c861f2b3c0580bc0efead.jpg" alt="Chocolates">
+                        </div>
+                        <h3>Chocolates</h3>
+                        <span>Ver coleção →</span>
+                    </a>
+                    <a href="produtos.html" class="category-card">
+                        <div class="category-img">
+                            <img src="https://i.ibb.co/8gdJtf5X/fbcf28284fb46222363f18bc35299a32.jpg" alt="Ver Todos">
+                        </div>
+                        <h3>Ver Todos</h3>
+                        <span>Ver coleção →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section" id="chocolates">
+            <div class="container">
+                <h2 class="section-title">🍫 Nossos Chocolates</h2>
+                <p class="section-subtitle">Delícias feitas com amor e os melhores ingredientes</p>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-badge off-badge">20% OFF</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/NcHGcHB/5d73167f545c861f2b3c0580bc0efead.jpg" alt="Caixa de Trufa Especial">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Trufas</span>
+                            <h3>Caixa de Trufa Especial</h3>
+                            <p class="product-description">4 trufas de chocolate, 4 de coco, 4 de ninho, 4 meio amargo, 4 crocantes, 4 geleia de morango</p>
+                            <div class="product-price">
+                                <span class="price-old">R$ 89,90</span>
+                                <span class="price-current">R$ 72,00</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge off-badge">22% OFF</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/d4wm4JsY/20bbf216cd22044474cfdeea08b67ba0.jpg" alt="Macarons Premium">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Trufas</span>
+                            <h3>Macarons Premium</h3>
+                            <p class="product-description">16 Macarons sortidos decorados</p>
+                            <div class="product-price">
+                                <span class="price-old">R$ 89,90</span>
+                                <span class="price-current">R$ 69,99</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/99BMwfX9/802a53e4db33a34d79c2ce72cd7e2107.jpg" alt="Coração da Felicidade">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Trufas</span>
+                            <h3>Coração da Felicidade</h3>
+                            <p class="product-description">7 brigadeiros premium, 1 coração de chocolate com mousse de brigadeiro</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 69,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">-10%</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/8gdJtf5X/fbcf28284fb46222363f18bc35299a32.jpg" alt="Mini Caixa Love">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Trufas</span>
+                            <h3>Mini Caixa Love</h3>
+                            <p class="product-description">4 brigadeiros de chocolate premium e 5 brigadeiros de morango</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 39,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="produtos.html" class="btn btn-primary">Ver Todos os Chocolates</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="special-section">
+            <div class="container">
+                <div class="special-banner">
+                    <div class="special-content">
+                        <span class="special-tag">🎁 Kit Especial</span>
+                        <h2>Kit 3 Mini Ovos<br>Sortidos</h2>
+                        <p>Uma combinação perfeita de mini ovos de chocolate para presentear</p>
+                        <a href="produtos.html" class="btn btn-secondary">Ver Kit</a>
+                    </div>
+                    <div class="special-image">
+                        <img src="https://i.ibb.co/JgZHT5z/Kit-3-mini-ovos-de-pascoa.jpg" alt="Kit 3 Mini Ovos">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section" id="cestas">
+            <div class="container">
+                <h2 class="section-title">🎁 Cestas Especiais</h2>
+                <p class="section-subtitle">Presentes para todas as ocasiões</p>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-badge">Favorito</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/Y48Wpk7H/Cesta-de-caf-da-manha-Girasolis.jpg" alt="Cesta Café da Manhã">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Café da Manhã</span>
+                            <h3>Cesta Café da Manhã Girasolis</h3>
+                            <p class="product-description">Cesta completa com diversos itens especiais</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 159,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">Novidade</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/Tq4G69Fx/Cesta-de-caf-da-manha-redvelvet.jpg" alt="Cesta Red Velvet">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Café da Manhã</span>
+                            <h3>Cesta Red Velvet</h3>
+                            <p class="product-description">Cesta completa com diversos itens especiais</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 199,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/6cBLwncb/Cesta-de-aniversario-com-bolo-personalizado.jpg" alt="Cesta Aniversário">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Aniversário</span>
+                            <h3>Cesta Aniversário Premium</h3>
+                            <p class="product-description">Cesta completa com diversos itens especiais</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 219,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">Premium</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/8LLc5fTp/Cesta-de-pascoa-pistache.jpg" alt="Cesta Páscoa Pistache">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Páscoa</span>
+                            <h3>Cesta Páscoa Pistache</h3>
+                            <p class="product-description">Ovo pistache, trufas e chocolate gourmet • 1.2kg</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 249,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="produtos.html" class="btn btn-primary">Ver Todas as Cestas</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="products-section" id="pascoa">
+            <div class="container">
+                <h2 class="section-title">🥚 Ovos de Páscoa</h2>
+                <p class="section-subtitle">Os ovos mais gostosos para presentear</p>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-badge off-badge">20% OFF</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/tp4kdR5N/OVo-de-chocolate-ao-leite-rechado-com-brigadeiro-brawonie-e-morangos.jpg" alt="Ovo Brownie">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Páscoa</span>
+                            <h3>Ovo Brownie</h3>
+                            <p class="product-description">Recheado com brigadeiro, branquinho e morangos • 500g</p>
+                            <div class="product-price">
+                                <span class="price-old">R$ 74,90</span>
+                                <span class="price-current">R$ 59,99</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge off-badge">22% OFF</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/JjC2VpQF/Ovo-de-chocolate-ao-leite-rechado-com-brigadeiro-e-ferreiro-rocher.jpg" alt="Ovo Ferrero Rocher">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Páscoa</span>
+                            <h3>Ovo Ferrero Rocher</h3>
+                            <p class="product-description">Recheado com brigadeiro e Ferrero Rocher • 500g</p>
+                            <div class="product-price">
+                                <span class="price-old">R$ 69,90</span>
+                                <span class="price-current">R$ 59,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">Popular</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/sv8tBY1b/Ovo-de-chocolate-ao-leite-rechado-com-brigadeiro-e-franui.jpg" alt="Ovo Franui Brigadeiro">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Páscoa</span>
+                            <h3>Ovo Franui Brigadeiro</h3>
+                            <p class="product-description">Recheado com brigadeiro e Franui • 500g</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 69,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-badge">Especial</div>
+                        <div class="product-img" onclick="openZoomModal(this)">
+                            <img src="https://i.ibb.co/3m7xLg73/Ovo-de-chocolate-ao-leite-rechado-com-ninho-e-kinder-bueno.jpg" alt="Ovo Ninho Kinder Bueno">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Páscoa</span>
+                            <h3>Ovo Ninho Kinder Bueno</h3>
+                            <p class="product-description">Recheado com Ninho e Kinder Bueno • 500g</p>
+                            <div class="product-price">
+                                <span class="price-current">R$ 59,90</span>
+                            </div>
+                            <button class="btn-add-cart">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="produtos.html" class="btn btn-primary">Ver Todos os Ovos de Páscoa</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🚚</span>
+                        <h3>Frete Grátis</h3>
+                        <p>Para todo estado de SP</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎁</span>
+                        <h3>Embalagem Premium</h3>
+                        <p>Presente perfeito</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💳</span>
+                        <h3>Parcele em 3x</h3>
+                        <p>Sem juros</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔒</span>
+                        <h3>Compra Segura</h3>
+                        <p>Seus dados protegidos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">Avaliações</h2>
+                <p class="section-subtitle">O que nossos clientes dizem</p>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p>"As cestas são maravilhosas! Recomendo demais!"</p>
+                        <div class="testimonial-author">Maria S. - São Paulo</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Comprei ovos de Páscoa e foram os mais gostosos!"</p>
+                        <div class="testimonial-author">João P. - São Paulo</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Entrega rápida e produtos de excelente qualidade."</p>
+                        <div class="testimonial-author">Ana C. - São Paulo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-box">
+                    <h2>Receba Ofertas Exclusivas</h2>
+                    <p>Cadastre seu e-mail e ganhe 10% OFF na primeira compra</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu melhor e-mail">
+                        <button type="submit">Quero Meu Desconto</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🍫</span>
+                        <span class="logo-text">Charme<span>Chocolate</span></span>
+                    </div>
+                    <p>Chocolates artesanais feitos com amor para tornar seus momentos especiais.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="produtos.html">Produtos</a></li>
+                        <li><a href="produtos.html#pascoa">Páscoa</a></li>
+                        <li><a href="produtos.html#cestas">Cestas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>📞 (11) 99999-8888</li>
+                        <li>📧 contato@charmechocolate.com.br</li>
+                        <li>🏠 São Paulo - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 Charme Chocolate. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="whatsapp-btn">
+        <a href="checkout.html">
+            <span>🛒</span>
+            <span class="cart-count-badge" id="floating-cart-count">0</span>
+        </a>
+    </div>
+
+    <div class="image-zoom-modal" id="image-zoom-modal" onclick="closeZoomModal(event)">
+        <div class="image-zoom-content" onclick="event.stopPropagation()">
+            <button class="image-zoom-close" onclick="closeZoomModal()">×</button>
+            <img src="" alt="Produto ampliado" id="zoom-image">
+            <div class="image-zoom-info">
+                <h3 id="zoom-product-name"></h3>
+                <p id="zoom-product-price"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

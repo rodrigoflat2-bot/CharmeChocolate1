@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Charme Chocolate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .products-page {
+            min-height: 100vh;
+            background: var(--bg-light);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 60px 0;
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .products-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+        }
+        
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+        
+        .sidebar h3 {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group h4 {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        
+        .filter-option:hover {
+            background: var(--bg-cream);
+        }
+        
+        .filter-option input {
+            accent-color: var(--primary);
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+        
+        .products-content {
+            flex: 1;
+        }
+        
+        .products-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 20px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+        }
+        
+        .products-count {
+            color: var(--text-medium);
+        }
+        
+        .products-sort select {
+            padding: 10px 15px;
+            border: 2px solid var(--secondary);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .category-section {
+            margin-bottom: 50px;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .category-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .category-header span {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .products-grid-page {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card-page {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .product-card-page:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .product-badge-page {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .product-badge-page.off-badge {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+        }
+        
+        .product-img-page {
+            height: 200px;
+            overflow: hidden;
+            background: var(--bg-cream);
+            position: relative;
+        }
+        
+        .product-img-page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .product-card-page:hover .product-img-page img {
+            transform: scale(1.05);
+        }
+        
+        .product-info-page {
+            padding: 50px 20px 20px;
+            position: relative;
+        }
+        
+        .product-category-page {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .product-info-page h3 {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        
+        .product-description-page {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .product-price-page {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .price-old-page {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+        
+        .price-current-page {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        
+        .discount-badge-page {
+            display: inline-block;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-add-cart-page {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-add-cart-page:hover {
+            background: var(--primary-dark);
+        }
+        
+        .mobile-filter-btn {
+            display: none;
+            width: 100%;
+            padding: 12px;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 968px) {
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                border-radius: 0;
+                overflow-y: auto;
+            }
+            
+            .sidebar.show {
+                display: block;
+            }
+            
+            .mobile-filter-btn {
+                display: block;
+            }
+            
+            .products-grid-page {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .products-grid-page {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .image-zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .image-zoom-modal.show {
+            display: flex;
+        }
+        
+        .image-zoom-content {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+        }
+        
+        .image-zoom-content img {
+            width: 100%;
+            max-height: 60vh;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            cursor: zoom-out;
+            object-fit: contain;
+        }
+        
+        .image-zoom-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--text-dark);
+        }
+        
+        .image-zoom-close:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .image-zoom-info {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .image-zoom-info h3 {
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .image-zoom-info p {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .product-img-page {
+            cursor: zoom-in;
+        }
+        
+        .product-img-page:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-desc-cesta {
+            width: 100%;
+            padding: 10px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 10px;
+        }
+        
+        .btn-desc-cesta:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-desc-cesta.active {
+            background: var(--primary);
+        }
+        
+        .cesta-desc {
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--cream-light) 100%);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .cesta-desc p {
+            margin: 0;
+        }
+        
+        .flavor-btn {
+            padding: 10px 18px;
+            border: 2px solid var(--secondary);
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .flavor-btn:hover {
+            border-color: var(--primary);
+            background: var(--bg-cream);
+        }
+        
+        .flavor-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="announcement-bar">
+            <p>🚚 Entregas apenas para São Paulo | Frete Grátis no estado! | Cupom <strong>PASCOA15</strong> para 15% OFF</p>
+        </div>
+        <nav class="nav-container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🍫</span>
+                    <span class="logo-text">Charme<span>Chocolate</span></span>
+                </a>
+                <div class="nav-actions">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <span class="welcome-message" id="welcome-message"></span>
+                    <a href="minha-conta.html" class="nav-link" id="account-link">Minha Conta</a>
+                    <a href="checkout.html" class="cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+            </div>
+            <div class="categories-bar">
+                <ul class="categories-list">
+                    <li class="category-item">
+                        <a href="#chocolates">Chocolates</a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#cestas">Cestas</a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#pascoa">Páscoa</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="products-page">
+        <div class="page-header">
+            <h1>🍫 Nossos Produtos</h1>
+            <p>Conheça toda a nossa linha de chocolates e cestas especiais</p>
+        </div>
+        
+        <div class="products-container">
+            <aside class="sidebar" id="sidebar">
+                <h3>Categorias</h3>
+                
+                <div class="filter-group">
+                    <div class="filter-options">
+                        <label class="filter-option" onclick="filterProducts('all')">
+                            <input type="radio" name="category" checked>
+                            <span>Todos os Produtos</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('pascoa')">
+                            <input type="radio" name="category">
+                            <span>Ovos de Páscoa</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('trufas')">
+                            <input type="radio" name="category">
+                            <span>Trufas</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('tabletes')">
+                            <input type="radio" name="category">
+                            <span>Tabletes</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('bombons')">
+                            <input type="radio" name="category">
+                            <span>Bombons</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('bolinhas')">
+                            <input type="radio" name="category">
+                            <span>Bolinhas</span>
+                        </label>
+                        <label class="filter-option" onclick="filterProducts('cestas')">
+                            <input type="radio" name="category">
+                            <span>Cestas</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Faixa de Preço</h4>
+                    <div class="filter-options">
+                        <label class="filter-option" onclick="showAllProducts()">
+                            <input type="radio" name="price" checked>
+                            <span>Todos os Preços</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox">
+                            <span>Até R$ 30</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox">
+                            <span>R$ 30 - R$ 60</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox">
+                            <span>R$ 60 - R$ 100</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox">
+                            <span>Acima de R$ 100</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="showAllProducts()">Ver Todos</button>
+            </aside>
+            
+            <div class="products-content">
+                <button class="mobile-filter-btn" onclick="toggleSidebar()">☰ Filtrar por Categoria</button>
+                
+                <div class="products-toolbar">
+                    <span class="products-count">Mostrando <strong id="product-count">36</strong> produtos</span>
+                    <div class="products-sort">
+                        <select onchange="sortProducts()">
+                            <option value="relevancia">Ordenar por: Relevância</option>
+                            <option value="menor-preco">Menor Preço</option>
+                            <option value="maior-preco">Maior Preço</option>
+                            <option value="nome">Nome A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="products-sections">
+                    <section class="category-section" id="pascoa">
+                        <div class="category-header">
+                            <h2>🥚 Ovos de Páscoa</h2>
+                            <span>12 produtos</span>
+                        </div>
+                        <div class="products-grid-page">
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Kit</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/JgZHT5z/Kit-3-mini-ovos-de-pascoa.jpg" alt="Kit 3 Mini Ovos">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Kit 3 Mini Ovos Sortidos</h3>
+                                    <p class="product-description-page">Mini ovos de chocolate variados • 300g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 49,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Novidade</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/tp4kdR5N/OVo-de-chocolate-ao-leite-rechado-com-brigadeiro-brawonie-e-morangos.jpg" alt="Ovo Brownie">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <span class="discount-badge-page">20% OFF</span>
+                                    <h3>Ovo Brownie</h3>
+                                    <p class="product-description-page">Recheado com brigadeiro, branquinho e morangos • 500g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 74,90</span>
+                                        <span class="price-current-page">R$ 59,99</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Premium</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/JjC2VpQF/Ovo-de-chocolate-ao-leite-rechado-com-brigadeiro-e-ferreiro-rocher.jpg" alt="Ovo Ferrero Rocher">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <span class="discount-badge-page">14% OFF</span>
+                                    <h3>Ovo Ferrero Rocher</h3>
+                                    <p class="product-description-page">Recheado com brigadeiro e Ferrero Rocher • 500g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 69,90</span>
+                                        <span class="price-current-page">R$ 59,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Popular</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/sv8tBY1b/Ovo-de-chocolate-ao-leite-rechado-com-brigadeiro-e-franui.jpg" alt="Ovo Franui">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Ovo Franui Brigadeiro</h3>
+                                    <p class="product-description-page">Recheado com brigadeiro e Franui • 500g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 69,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Especial</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/3m7xLg73/Ovo-de-chocolate-ao-leite-rechado-com-ninho-e-kinder-bueno.jpg" alt="Ovo Ninho Kinder">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Ovo Ninho Kinder Bueno</h3>
+                                    <p class="product-description-page">Recheado com Ninho e Kinder Bueno • 500g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 59,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="pascoa">
+                                <span class="product-badge-page">Premium</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/qLDJPBCQ/Ovo-de-chocolate-ao-leite-rechado-com-ninho-brigadeiro-e-geleia-de-morango.jpg" alt="Ovo Ninho Morango">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Ovo Ninho Brigadeiro Morango</h3>
+                                    <p class="product-description-page">Recheado com Ninho, brigadeiro e geleia • 500g</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 59,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="category-section" id="chocolates">
+                        <div class="category-header">
+                            <h2>🍫 Chocolates</h2>
+                            <span>7 produtos</span>
+                        </div>
+                        <div class="products-grid-page">
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/NcHGcHB/5d73167f545c861f2b3c0580bc0efead.jpg" alt="Caixa de Trufa Especial">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <span class="discount-badge-page">20% OFF</span>
+                                    <h3>Caixa de Trufa Especial</h3>
+                                    <p class="product-description-page">4 trufas de chocolate, 4 trufas de coco, 4 trufas de ninho, 4 trufas de chocolate meio amargo, 4 trufas crocantes, 4 trufas de geleia de morango</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 89,90</span>
+                                        <span class="price-current-page">R$ 72,00</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/Fb5DTg6N/16c7d4bb3050f562b8fab278d7bd16d9.jpg" alt="Barra de Chocolate Recheada">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <h3>Barra de Chocolate Recheada</h3>
+                                    <p class="product-description-page">Chocolate ao leite com recheio especial</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 19,90</span>
+                                    </div>
+                                    <div class="flavor-selector" style="margin: 10px 0;">
+                                        <span style="font-size: 0.9rem; color: var(--text-dark); margin-bottom: 10px; display: block; font-weight: 600;">Escolha os sabores:</span>
+                                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+                                            <button class="flavor-btn" data-flavor="Coco" onclick="toggleFlavorSelection(this)">🍫 Coco</button>
+                                            <button class="flavor-btn" data-flavor="Morango" onclick="toggleFlavorSelection(this)">🍓 Morango</button>
+                                            <button class="flavor-btn" data-flavor="Maracujá" onclick="toggleFlavorSelection(this)">🍋 Maracujá</button>
+                                            <button class="flavor-btn" data-flavor="Mousse de Chocolate" onclick="toggleFlavorSelection(this)">🍫 Mousse de Chocolate</button>
+                                        </div>
+                                        <div class="flavor-summary" style="display: none; background: var(--bg-cream); padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                                            <span style="font-size: 0.85rem; color: var(--text-medium); display: block; margin-bottom: 8px;">Sabor selecionado:</span>
+                                            <div class="flavor-items"></div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/d4wm4JsY/20bbf216cd22044474cfdeea08b67ba0.jpg" alt="Macarons Premium">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <span class="discount-badge-page">22% OFF</span>
+                                    <h3>Macarons Premium</h3>
+                                    <p class="product-description-page">16 Macarons sortidos decorados</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 89,90</span>
+                                        <span class="price-current-page">R$ 69,99</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/99BMwfX9/802a53e4db33a34d79c2ce72cd7e2107.jpg" alt="Coração da Felicidade">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <span class="discount-badge-page">28% OFF</span>
+                                    <h3>Coração da Felicidade</h3>
+                                    <p class="product-description-page">7 brigadeiros de qualidade premium, 1 coração de chocolate ao leite recheado com mousse de brigadeiro</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 69,90</span>
+                                        <span class="price-current-page">R$ 49,99</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/RGDH0VyT/7875c08398f38fd03643eb9707ac2c52.jpg" alt="Caixa da Felicidade">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <h3>Caixa da Felicidade</h3>
+                                    <p class="product-description-page">16 bombons sortidos de qualidade premium</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 59,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/DZzbdSb/a811115d2ab9056b88b99341d7c16bac.jpg" alt="Macarrons Rose">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <h3>Macarrons Rose</h3>
+                                    <p class="product-description-page">12 macarrons decorados no rosa com caixa decorativa em formato de coração</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 79,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="trufas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/8gdJtf5X/fbcf28284fb46222363f18bc35299a32.jpg" alt="Mini Caixa Love">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Trufas</span>
+                                    <h3>Mini Caixa Love</h3>
+                                    <p class="product-description-page">4 brigadeiros de chocolate premium e 5 brigadeiros de morango</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 39,90</span>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="category-section" id="cestas">
+                        <div class="category-header">
+                            <h2>🎁 Cestas Especiais</h2>
+                            <span>6 produtos</span>
+                        </div>
+                        <div class="products-grid-page">
+                            <div class="product-card-page" data-category="cestas">
+                                <span class="product-badge-page">Favorito</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/Y48Wpk7H/Cesta-de-caf-da-manha-Girasois.jpg" alt="Cesta Café da Manhã">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Café da Manhã</span>
+                                    <h3>Cesta Café da Manhã Girasolis</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 159,90</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 1 bolo de cenoura com chocolate<br>• 4 pães de queijo<br>• 100g de queijo premium<br>• 100g de presunto premium<br>• 2 pães francês<br>• 1 caixa de uvas<br>• 5 unidades de morangos frescos<br>• 700ml de suco de uva natural<br>• 2 lindos girassóis em garrafa personalizada</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/Tq4G69Fx/Cesta-de-caf-da-manha-redvelvet.jpg" alt="Cesta Red Velvet">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Café da Manhã</span>
+                                    <h3>Cesta Red Velvet</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 199,90</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 1 bolo red velvet 1kg<br>• 1 caixa de uvas<br>• 2 brownies de nutella<br>• 700ml de suco de uva natural<br>• 1 pão de forma natural<br>• 5 morangos frescos<br>• Buquê de lindas flores tropicais</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <span class="product-badge-page">Novidade</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/6cBLwncb/Cesta-de-aniversario-com-bolo-personalizado.jpg" alt="Cesta Aniversário">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Aniversário</span>
+                                    <h3>Cesta Aniversário Premium</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 219,90</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 1 bolo personalizado 1kg<br>• 1 mousse de limão com morango<br>• 1 geleia de uva<br>• Pedaços de queijo e presunto<br>• Uvas e morangos<br>• 4 trufas sortidas<br>• 1 croissant<br>• 1 wafer<br>• 1L de suco de laranja 100%<br>• 1 pacotinho de salame</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/CphfNVkv/Cesta-de-aniversario.jpg" alt="Cesta Aniversário">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Aniversário</span>
+                                    <h3>Cesta Festa de Aniversário</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 189,90</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• Mini bolo de aniversário com recheio de ninho e chocolate 400g<br>• 2 saladas de frutas<br>• 2 croissants médios<br>• 1 potinho com mousse de morango e granolas<br>• 1 torta de morango<br>• Biscoitos Bauducco<br>• Queijo premium<br>• 1 garrafa de suco de uva natural 500ml<br>• Morangos com cobertura de chocolate<br>• 1 balão decorativo</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <span class="product-badge-page">Especial</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/wN21m20J/Cesta-de-pascoa-para-o-moz-o.jpg" alt="Cesta para o Mozão">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Cesta para o Mozão</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-current-page">R$ 399,00</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 1 Garrafa Jack Daniels 500ml<br>• 1 champagne 700ml<br>• 1 doce de leite premium<br>• 1 pedaço de queijo premium<br>• 1 pacotinho de salames<br>• 1 potinho com geleia de morango natural<br>• Goiabada premium<br>• Panettone 1kg</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <span class="discount-badge-page">16% OFF</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/5xt9rSV1/d44b51a0fa90d82855a5e0b47b064fc3.jpg" alt="Kit Conquista">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Cestas</span>
+                                    <h3>Kit Conquista</h3>
+                                    <p class="product-description-page">Kit especial para surpreender</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 250,00</span>
+                                        <span class="price-current-page">R$ 210,00</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 20 rosas vermelhas naturais<br>• 20 bombons Ferrero Rocher<br>• Embalagem personalizada em formato de coração</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card-page" data-category="cestas">
+                                <span class="discount-badge-page">40% OFF</span>
+                                <div class="product-img-page">
+                                    <img src="https://i.ibb.co/8LLc5fTp/Cesta-de-pascoa-pistache.jpg" alt="Cesta Páscoa Pistache">
+                                </div>
+                                <div class="product-info-page">
+                                    <span class="product-category-page">Páscoa</span>
+                                    <h3>Cesta Páscoa Pistache</h3>
+                                    <p class="product-description-page">Cesta completa com diversos itens especiais</p>
+                                    <div class="product-price-page">
+                                        <span class="price-old-page">R$ 249,90</span>
+                                        <span class="price-current-page">R$ 149,99</span>
+                                    </div>
+                                    <button class="btn-desc-cesta" onclick="toggleDesc(this)">📋 Ver Descrição</button>
+                                    <div class="cesta-desc" style="display: none;">
+                                        <p>• 1 ovo de pistache artesanal 500g<br>• 6 trufas de pistache na caixa<br>• 3 Ferrero Rocher<br>• 2 Kinder Ovo<br>• 2 Kinder Bueno<br>• 1 barra de chocolate Ferrero Rocher</p>
+                                    </div>
+                                    <button class="btn-add-cart-page">Adicionar ao Carrinho</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="image-zoom-modal" id="image-zoom-modal" onclick="closeZoomModal(event)">
+        <div class="image-zoom-content" onclick="event.stopPropagation()">
+            <button class="image-zoom-close" onclick="closeZoomModal()">×</button>
+            <img src="" alt="Produto ampliado" id="zoom-image">
+            <div class="image-zoom-info">
+                <h3 id="zoom-product-name"></h3>
+                <p id="zoom-product-price"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🍫</span>
+                        <span class="logo-text">Charme<span>Chocolate</span></span>
+                    </div>
+                    <p>A magia do chocolate feita com amor e os melhores ingredientes.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">📸</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📌</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li><a href="produtos.html">Chocolates</a></li>
+                        <li><a href="produtos.html">Cestas</a></li>
+                        <li><a href="produtos.html">Páscoa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contato</h4>
+                    <ul class="contact-info">
+                        <li>📞 (11) 99999-8888</li>
+                        <li>📧 contato@charmechocolate.com.br</li>
+                        <li>⏰ Seg a Sex: 9h às 18h</li>
+                        <li>🏠 São Paulo - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 Charme Chocolate. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('charmeCart')) || [];
+        let currentFilter = 'all';
+        
+        function saveCart() {
+            localStorage.setItem('charmeCart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = totalItems;
+            });
+            document.querySelectorAll('.cart-count-badge').forEach(el => {
+                el.textContent = totalItems;
+                el.style.display = totalItems > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+        
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('show');
+        }
+        
+        function updateFilterDisplay() {
+            const sections = document.querySelectorAll('.category-section');
+            const allCards = document.querySelectorAll('.product-card-page');
+            let totalVisible = 0;
+            
+            if (currentFilter === 'all') {
+                sections.forEach(section => {
+                    section.style.display = 'block';
+                });
+                allCards.forEach(card => {
+                    card.style.display = 'block';
+                    totalVisible++;
+                });
+            } else {
+                const categoryNames = {
+                    'pascoa': 'pascoa-section',
+                    'trufas': 'chocolates-section',
+                    'tabletes': 'chocolates-section',
+                    'bombons': 'chocolates-section',
+                    'bolinhas': 'chocolates-section',
+                    'cestas': 'cestas-section'
+                };
+                
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                allCards.forEach(card => {
+                    const category = card.dataset.category;
+                    const targetSection = categoryNames[category];
+                    
+                    if (category === currentFilter) {
+                        card.style.display = 'block';
+                        totalVisible++;
+                        
+                        const section = document.getElementById(targetSection);
+                        if (section) {
+                            section.style.display = 'block';
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            document.getElementById('product-count').textContent = totalVisible;
+        }
+        
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            const filterOptions = document.querySelectorAll('.filter-option input');
+            filterOptions.forEach((input, index) => {
+                const categories = ['all', 'pascoa', 'trufas', 'tabletes', 'bombons', 'bolinhas', 'cestas'];
+                if (categories[index] === category) {
+                    input.checked = true;
+                }
+            });
+            
+            updateFilterDisplay();
+            closeSidebar();
+        }
+        
+        function showAllProducts() {
+            currentFilter = 'all';
+            
+            const filterOptions = document.querySelectorAll('.filter-option input');
+            filterOptions.forEach((input, index) => {
+                if (index === 0) {
+                    input.checked = true;
+                } else {
+                    input.checked = false;
+                }
+            });
+            
+            updateFilterDisplay();
+        }
+        
+        function sortProducts() {
+            const sortSelect = document.querySelector('.products-sort select');
+            const sortValue = sortSelect.value;
+            
+            const allSections = document.querySelectorAll('.category-section');
+            
+            allSections.forEach(section => {
+                const productsGrid = section.querySelector('.products-grid-page');
+                const products = Array.from(section.querySelectorAll('.product-card-page'));
+                
+                products.sort((a, b) => {
+                    const priceA = parseFloat(a.querySelector('.price-current-page').textContent.replace('R$ ', '').replace(',', '.'));
+                    const priceB = parseFloat(b.querySelector('.price-current-page').textContent.replace('R$ ', '').replace(',', '.'));
+                    
+                    switch(sortValue) {
+                        case 'menor-preco':
+                            return priceA - priceB;
+                        case 'maior-preco':
+                            return priceB - priceA;
+                        case 'nome':
+                            const nameA = a.querySelector('h3').textContent.toLowerCase();
+                            const nameB = b.querySelector('h3').textContent.toLowerCase();
+                            return nameA.localeCompare(nameB);
+                        default:
+                            return 0;
+                    }
+                });
+                
+                products.forEach(product => {
+                    productsGrid.appendChild(product);
+                });
+            });
+        }
+        
+        let selectedFlavors = {};
+        
+        function toggleFlavorSelection(btn) {
+            const flavor = btn.dataset.flavor;
+            const container = btn.closest('.flavor-selector');
+            
+            if (btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+                delete selectedFlavors[flavor];
+            } else {
+                btn.classList.add('selected');
+                selectedFlavors[flavor] = 1;
+            }
+            
+            updateFlavorSummary(container);
+        }
+        
+        function changeFlavorQty(flavor, change) {
+            selectedFlavors[flavor] += change;
+            if (selectedFlavors[flavor] < 1) {
+                delete selectedFlavors[flavor];
+                const btn = document.querySelector(`.flavor-btn[data-flavor="${flavor}"]`);
+                if (btn) btn.classList.remove('selected');
+            }
+            if (selectedFlavors[flavor] > 10) selectedFlavors[flavor] = 10;
+            
+            const container = document.querySelector('.flavor-selector');
+            updateFlavorSummary(container);
+        }
+        
+        function updateFlavorSummary(container) {
+            const summaryDiv = container.querySelector('.flavor-summary');
+            const itemsDiv = container.querySelector('.flavor-items');
+            
+            const flavorNames = Object.keys(selectedFlavors);
+            
+            if (flavorNames.length === 0) {
+                summaryDiv.style.display = 'none';
+                return;
+            }
+            
+            summaryDiv.style.display = 'block';
+            itemsDiv.innerHTML = '';
+            
+            flavorNames.forEach(flavor => {
+                const qty = selectedFlavors[flavor];
+                const item = document.createElement('div');
+                item.style.cssText = 'display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 8px; background: white; border-radius: 6px;';
+                item.innerHTML = `
+                    <span style="font-weight: 500; color: var(--text-dark);">${flavor}</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button onclick="changeFlavorQty('${flavor}', -1)" style="width: 24px; height: 24px; border: 1px solid var(--secondary); background: white; border-radius: 50%; cursor: pointer; font-size: 0.9rem;">−</button>
+                        <span style="font-weight: 600; min-width: 20px; text-align: center;">${qty}</span>
+                        <button onclick="changeFlavorQty('${flavor}', 1)" style="width: 24px; height: 24px; border: 1px solid var(--secondary); background: white; border-radius: 50%; cursor: pointer; font-size: 0.9rem;">+</button>
+                        <button onclick="removeFlavor('${flavor}')" style="background: none; border: none; color: #E53935; cursor: pointer; font-size: 1rem; margin-left: 5px;">✕</button>
+                    </div>
+                `;
+                itemsDiv.appendChild(item);
+            });
+        }
+        
+        function removeFlavor(flavor) {
+            delete selectedFlavors[flavor];
+            const btn = document.querySelector(`.flavor-btn[data-flavor="${flavor}"]`);
+            if (btn) btn.classList.remove('selected');
+            const container = document.querySelector('.flavor-selector');
+            updateFlavorSummary(container);
+        }
+        
+        document.querySelectorAll('.btn-add-cart-page').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.product-card-page');
+                let productName = card.querySelector('h3').textContent;
+                const productPrice = card.querySelector('.price-current-page').textContent;
+                const productImage = card.querySelector('.product-img-page img').src;
+                const productCategory = card.querySelector('.product-category-page').textContent;
+                
+                const flavorSelector = card.querySelector('.flavor-selector');
+                
+                if (flavorSelector && Object.keys(selectedFlavors).length > 0) {
+                    Object.keys(selectedFlavors).forEach(flavor => {
+                        const qty = selectedFlavors[flavor];
+                        const fullName = `${productName} - ${flavor}`;
+                        const existingItem = cart.find(item => item.name === fullName);
+                        const priceNum = parseFloat(productPrice.replace('R$ ', '').replace(',', '.'));
+                        
+                        if (existingItem) {
+                            existingItem.quantity += qty;
+                        } else {
+                            cart.push({
+                                name: fullName,
+                                price: priceNum,
+                                image: productImage,
+                                category: productCategory,
+                                quantity: qty
+                            });
+                        }
+                    });
+                    
+                    selectedFlavors = {};
+                    flavorSelector.querySelectorAll('.flavor-btn').forEach(b => b.classList.remove('selected'));
+                    updateFlavorSummary(flavorSelector);
+                } else {
+                    const existingItem = cart.find(item => item.name === productName);
+                    const priceNum = parseFloat(productPrice.replace('R$ ', '').replace(',', '.'));
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({
+                            name: productName,
+                            price: priceNum,
+                            image: productImage,
+                            category: productCategory,
+                            quantity: 1
+                        });
+                    }
+                }
+                
+                saveCart();
+                
+                const originalText = this.textContent;
+                this.textContent = '✓ Adicionado!';
+                this.style.background = '#2E7D32';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                }, 1500);
+            });
+        });
+        
+        function toggleDesc(btn) {
+            const desc = btn.nextElementSibling;
+            if (desc.classList.contains('cesta-desc')) {
+                if (desc.style.display === 'none') {
+                    desc.style.display = 'block';
+                    btn.classList.add('active');
+                    btn.textContent = '✖ Fechar';
+                } else {
+                    desc.style.display = 'none';
+                    btn.classList.remove('active');
+                    btn.textContent = '📋 Ver Descrição';
+                }
+            }
+        }
+        
+        document.querySelectorAll('.product-img-page').forEach(imgContainer => {
+            imgContainer.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                const card = this.closest('.product-card-page');
+                const productName = card.querySelector('h3').textContent;
+                const productPrice = card.querySelector('.price-current-page').textContent;
+                
+                document.getElementById('zoom-image').src = img.src;
+                document.getElementById('zoom-image').alt = productName;
+                document.getElementById('zoom-product-name').textContent = productName;
+                document.getElementById('zoom-product-price').textContent = productPrice;
+                document.getElementById('image-zoom-modal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        function closeZoomModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('image-zoom-modal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeZoomModal();
+            }
+        });
+        
+        function checkUserLogin() {
+            const currentUser = JSON.parse(localStorage.getItem('charmeCurrentUser'));
+            const welcomeMessage = document.getElementById('welcome-message');
+            const accountLink = document.getElementById('account-link');
+            
+            if (currentUser && welcomeMessage) {
+                const firstName = currentUser.name.split(' ')[0];
+                welcomeMessage.textContent = `Olá, ${firstName}!`;
+                if (accountLink) {
+                    accountLink.textContent = 'Minha Conta';
+                }
+            }
+        }
+        
+        checkUserLogin();
+        updateCartCount();
+        updateFilterDisplay();
+    </script>
+    
+    <div class="whatsapp-btn">
+        <a href="checkout.html">
+            <span>🛒</span>
+            <span class="cart-count-badge" id="floating-cart-count">0</span>
+        </a>
+    </div>
+</body>
+</html>

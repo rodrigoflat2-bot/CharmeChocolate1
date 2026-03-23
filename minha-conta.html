@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Charme Chocolate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .account-page {
+            min-height: 100vh;
+            background: var(--bg-light);
+        }
+        
+        .account-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--white);
+        }
+        
+        .account-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .account-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .account-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+        
+        .account-sidebar {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            height: fit-content;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .user-card {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--bg-cream);
+            margin-bottom: 20px;
+        }
+        
+        .user-avatar {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2.5rem;
+        }
+        
+        .user-card h3 {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .user-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .account-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .account-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 15px;
+            border-radius: var(--radius-md);
+            color: var(--text-medium);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .account-nav-item:hover {
+            background: var(--bg-cream);
+            color: var(--primary);
+        }
+        
+        .account-nav-item.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .account-nav-item span {
+            font-size: 1.2rem;
+        }
+        
+        .btn-logout {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background: var(--white);
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-logout:hover {
+            background: #e74c3c;
+            color: var(--white);
+        }
+        
+        .account-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .account-section {
+            display: none;
+        }
+        
+        .account-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--bg-cream);
+        }
+        
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .order-card {
+            border: 2px solid var(--bg-cream);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .order-header {
+            background: var(--bg-cream);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .order-info {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .order-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .order-info-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .order-info-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .order-status-badge {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-aguardando {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-preparando {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-enviado {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-entregue {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .order-products {
+            padding: 20px;
+        }
+        
+        .order-product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--bg-cream);
+        }
+        
+        .order-product:last-child {
+            border-bottom: none;
+        }
+        
+        .order-product-img {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .order-product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-product-info {
+            flex: 1;
+        }
+        
+        .order-product-info h4 {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .order-product-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .order-product-price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .order-total {
+            background: var(--bg-cream);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .order-total-label {
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+        
+        .order-total-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .order-address {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-top: 1px solid var(--bg-cream);
+        }
+        
+        .order-address h4 {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .order-address p {
+            color: var(--text-medium);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 3px;
+        }
+        
+        .order-address p em {
+            color: var(--primary);
+            font-style: italic;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            background: var(--white);
+            border-top: 1px solid var(--bg-cream);
+        }
+        
+        .btn-whatsapp-proof {
+            flex: 1;
+            padding: 12px 20px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        .btn-whatsapp-proof:hover {
+            background: #128C7E;
+        }
+        
+        .empty-orders {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-orders span {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .empty-orders h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        
+        .empty-orders p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+        
+        .profile-form {
+            max-width: 500px;
+        }
+        
+        .profile-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .profile-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .profile-form input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--bg-cream);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .profile-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .profile-form input:disabled {
+            background: var(--bg-cream);
+            color: var(--text-light);
+        }
+        
+        .btn-save {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+        }
+        
+        .addresses-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .address-card {
+            border: 2px solid var(--bg-cream);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+        
+        .address-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .address-card p {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        .btn-add-address {
+            padding: 14px 20px;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-add-address:hover {
+            background: var(--bg-cream);
+        }
+        
+        .address-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .address-modal.show {
+            display: flex;
+        }
+        
+        .address-modal-content {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+        
+        .address-modal h3 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .address-form .form-group {
+            margin-bottom: 10px;
+        }
+        
+        .address-form label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+        }
+        
+        .address-form input,
+        .address-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--bg-cream);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .address-form input:focus,
+        .address-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .address-form textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .address-form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-save-address {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-cancel-address {
+            padding: 10px 15px;
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 480px) {
+            .address-modal-content {
+                padding: 15px;
+                max-width: 95%;
+                margin: 10px;
+            }
+            
+            .address-form .form-group {
+                margin-bottom: 8px;
+            }
+            
+            .address-form label {
+                font-size: 0.8rem;
+            }
+            
+            .address-form input,
+            .address-form textarea {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        .cep-loading {
+            display: none;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .cep-loading.show {
+            display: block;
+        }
+        
+        .btn-cancel-address:hover {
+            border-color: var(--text-light);
+        }
+        
+        .saved-address {
+            position: relative;
+        }
+        
+        .saved-address .edit-address-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--bg-cream);
+            border: none;
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--text-medium);
+        }
+        
+        .saved-address .delete-address-btn {
+            position: absolute;
+            top: 15px;
+            right: 80px;
+            background: #ffebee;
+            border: none;
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #c62828;
+        }
+        
+        .login-prompt {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .login-prompt span {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 25px;
+        }
+        
+        .login-prompt h2 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+        
+        .login-prompt p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        .btn-login {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+        
+        @media (max-width: 900px) {
+            .account-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .account-sidebar {
+                order: -1;
+            }
+            
+            .account-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .account-nav-item {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="announcement-bar">
+            <p>🚚 Entregas apenas para São Paulo | Frete Grátis no estado! | Cupom <strong>PASCOA15</strong> para 15% OFF</p>
+        </div>
+        <nav class="nav-container">
+            <div class="nav-wrapper">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🍫</span>
+                    <span class="logo-text">Charme<span>Chocolate</span></span>
+                </a>
+                <div class="nav-actions">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <span class="welcome-message" id="welcome-message"></span>
+                    <a href="minha-conta.html" class="nav-link" id="account-link">Minha Conta</a>
+                    <a href="checkout.html" class="cart-btn">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="account-page">
+        <div class="account-header">
+            <h1>👤 Minha Conta</h1>
+        </div>
+        
+        <div class="account-container">
+            <div id="login-required" style="display: none;">
+                <div class="login-prompt">
+                    <span>🔐</span>
+                    <h2>Acesse sua conta</h2>
+                    <p>Faça login para acompanhar seus pedidos e gerenciar suas informações</p>
+                    <a href="conta.html" class="btn-login">Fazer Login</a>
+                </div>
+            </div>
+            
+            <div id="account-dashboard" style="display: none;">
+                <div class="account-grid">
+                    <aside class="account-sidebar">
+                        <div class="user-card">
+                            <div class="user-avatar">👤</div>
+                            <h3 id="sidebar-user-name">Usuário</h3>
+                            <p id="sidebar-user-email">email@exemplo.com</p>
+                        </div>
+                        
+                        <nav class="account-nav">
+                            <div class="account-nav-item active" onclick="showSection('pedidos')">
+                                <span>📦</span>
+                                <span>Meus Pedidos</span>
+                            </div>
+                            <div class="account-nav-item" onclick="showSection('perfil')">
+                                <span>👤</span>
+                                <span>Meu Perfil</span>
+                            </div>
+                            <div class="account-nav-item" onclick="showSection('enderecos')">
+                                <span>🏠</span>
+                                <span>Endereços</span>
+                            </div>
+                        </nav>
+                        
+                        <button class="btn-logout" onclick="handleLogout()">Sair da Conta</button>
+                    </aside>
+                    
+                    <div class="account-content">
+                        <section class="account-section active" id="section-pedidos">
+                            <div class="section-header">
+                                <h2>📦 Meus Pedidos</h2>
+                            </div>
+                            <div class="orders-list" id="orders-list">
+                            </div>
+                        </section>
+                        
+                        <section class="account-section" id="section-perfil">
+                            <div class="section-header">
+                                <h2>👤 Meu Perfil</h2>
+                            </div>
+                            <form class="profile-form" onsubmit="saveProfile(event)">
+                                <div class="form-group">
+                                    <label>Nome Completo</label>
+                                    <input type="text" id="profile-name">
+                                </div>
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="email" id="profile-email" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Telefone</label>
+                                    <input type="tel" id="profile-phone" placeholder="(11) 99999-9999">
+                                </div>
+                                <div class="form-group">
+                                    <label>CPF</label>
+                                    <input type="text" id="profile-cpf" placeholder="000.000.000-00">
+                                </div>
+                                <button type="submit" class="btn-save">Salvar Alterações</button>
+                            </form>
+                        </section>
+                        
+                        <section class="account-section" id="section-enderecos">
+                            <div class="section-header">
+                                <h2>🏠 Meus Endereços</h2>
+                            </div>
+                            <div class="addresses-list" id="addresses-list">
+                                <div class="address-card">
+                                    <h4>🏠 Endereço Principal</h4>
+                                    <p id="main-address">Nenhum endereço cadastrado</p>
+                                </div>
+                            </div>
+                            <button class="btn-add-address" onclick="openAddressModal()">+ Adicionar Novo Endereço</button>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="whatsapp-btn">
+        <a href="checkout.html">
+            <span>🛒</span>
+            <span class="cart-count-badge" id="floating-cart-count">0</span>
+        </a>
+    </div>
+
+    <div class="address-modal" id="address-modal">
+        <div class="address-modal-content">
+            <h3>🏠 Adicionar Endereço</h3>
+            <form class="address-form" onsubmit="saveAddress(event)">
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" id="address-cep" placeholder="00000-000" maxlength="9">
+                    <span class="cep-loading" id="address-cep-loading">Buscando CEP...</span>
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <input type="text" id="address-street" placeholder="Rua, Avenida, etc.">
+                </div>
+                <div class="form-group">
+                    <label>Número</label>
+                    <input type="text" id="address-number" placeholder="Número">
+                </div>
+                <div class="form-group">
+                    <label>Complemento</label>
+                    <input type="text" id="address-complement" placeholder="Apto, Bloco, etc. (opcional)">
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <input type="text" id="address-neighborhood" placeholder="Bairro">
+                </div>
+                <div class="form-group">
+                    <label>Cidade</label>
+                    <input type="text" id="address-city" placeholder="Cidade">
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <input type="text" id="address-state" value="SP" maxlength="2" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea id="address-note" placeholder="Ponto de referência, instruções de entrega, etc."></textarea>
+                </div>
+                <div class="address-form-actions">
+                    <button type="submit" class="btn-save-address">Salvar Endereço</button>
+                    <button type="button" class="btn-cancel-address" onclick="closeAddressModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('charmeCart')) || [];
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = totalItems;
+            });
+            document.querySelectorAll('.cart-count-badge').forEach(el => {
+                el.textContent = totalItems;
+                el.style.display = totalItems > 0 ? 'flex' : 'none';
+            });
+        }
+        
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem('charmeCurrentUser')) || null;
+        }
+        
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem('charmeCurrentUser', JSON.stringify(user));
+            } else {
+                localStorage.removeItem('charmeCurrentUser');
+            }
+        }
+        
+        function getUserOrders() {
+            const user = getCurrentUser();
+            if (!user) return [];
+            const allOrders = JSON.parse(localStorage.getItem('charmeOrders')) || [];
+            return allOrders.filter(o => o.userId === user.id);
+        }
+        
+        function saveOrder(order) {
+            const allOrders = JSON.parse(localStorage.getItem('charmeOrders')) || [];
+            allOrders.push(order);
+            localStorage.setItem('charmeOrders', JSON.stringify(allOrders));
+        }
+        
+        function updateOrderStatuses() {
+            const allOrders = JSON.parse(localStorage.getItem('charmeOrders')) || [];
+            const now = Date.now();
+            
+            allOrders.forEach(order => {
+                if (order.status === 'aguardando') {
+                    const elapsed = now - order.timestamp;
+                    const twoHours = 2 * 60 * 60 * 1000;
+                    
+                    if (elapsed >= twoHours) {
+                        order.status = 'preparando';
+                    }
+                }
+            });
+            
+            localStorage.setItem('charmeOrders', JSON.stringify(allOrders));
+        }
+        
+        function getStatusText(status) {
+            const statuses = {
+                'aguardando': 'Aguardando Pagamento',
+                'preparando': 'Preparando Pedido'
+            };
+            return statuses[status] || status;
+        }
+        
+        function getStatusClass(status) {
+            return 'status-' + (status || 'aguardando');
+        }
+        
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function renderOrders() {
+            const orders = getUserOrders();
+            const container = document.getElementById('orders-list');
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-orders">
+                        <span>📦</span>
+                        <h3>Nenhum pedido realizado</h3>
+                        <p>Quando você fizer uma compra, seus pedidos aparecerão aqui.</p>
+                        <a href="produtos.html" class="btn btn-primary">Ver Produtos</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = orders.map(order => {
+                const itemsList = order.items.map(item => {
+                    const price = parseFloat(item.price) || 0;
+                    const quantity = parseInt(item.quantity) || 1;
+                    return `${item.name} - ${quantity}x - R$ ${(price * quantity).toFixed(2).replace('.', ',')}`;
+                }).join(', ');
+                
+                let addressInfo = '';
+                if (order.address) {
+                    addressInfo = `\n📍 Endereço: ${order.address.address}, ${order.address.number} - ${order.address.city}/${order.address.state}`;
+                    if (order.address.note) {
+                        addressInfo += `\n📝 Obs: ${order.address.note}`;
+                    }
+                }
+                
+                const whatsappMessage = encodeURIComponent(
+                    `Olá! Envio o comprovante de pagamento do pedido #${order.id}.\n\n` +
+                    `Produtos: ${itemsList}\n\n` +
+                    `Total: R$ ${parseFloat(order.total).toFixed(2).replace('.', ',')}\n\n` +
+                    `Forma de pagamento: ${order.payment}${addressInfo}`
+                );
+                
+                return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <div class="order-info-item">
+                                <span class="order-info-label">Pedido</span>
+                                <span class="order-info-value">#${order.id}</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-info-label">Data</span>
+                                <span class="order-info-value">${formatDate(order.timestamp)}</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-info-label">Itens</span>
+                                <span class="order-info-value">${order.items.length} produto(s)</span>
+                            </div>
+                        </div>
+                        <span class="order-status-badge ${getStatusClass(order.status)}">${getStatusText(order.status)}</span>
+                    </div>
+                    <div class="order-products">
+                        ${order.items.map(item => {
+                            const price = parseFloat(item.price) || 0;
+                            const quantity = parseInt(item.quantity) || 1;
+                            return `
+                            <div class="order-product">
+                                <div class="order-product-img">
+                                    <img src="${item.image}" alt="${item.name}">
+                                </div>
+                                <div class="order-product-info">
+                                    <h4>${item.name}</h4>
+                                    <p>${quantity}x - ${item.flavor ? item.flavor : 'único'}</p>
+                                </div>
+                                <span class="order-product-price">R$ ${(price * quantity).toFixed(2).replace('.', ',')}</span>
+                            </div>
+                        `}).join('')}
+                    </div>
+                    ${order.address ? `
+                    <div class="order-address">
+                        <h4>📍 Endereço de Entrega</h4>
+                        <p><strong>${order.address.name}</strong></p>
+                        <p>${order.address.address}, ${order.address.number}${order.address.complement ? ', ' + order.address.complement : ''}</p>
+                        <p>${order.address.neighborhood} - ${order.address.city}/${order.address.state}</p>
+                        <p>CEP: ${order.address.cep} ${order.address.reference ? '| Ref: ' + order.address.reference : ''}</p>
+                        ${order.address.note ? `<p><em>Obs: ${order.address.note}</em></p>` : ''}
+                    </div>
+                    ` : ''}
+                    <div class="order-total">
+                        <span class="order-total-label">Total do Pedido</span>
+                        <span class="order-total-value">R$ ${parseFloat(order.total).toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    ${order.status === 'aguardando' ? `
+                    <div class="order-actions">
+                        <button class="btn-whatsapp-proof" onclick="sendProofWhatsApp(${order.id})">
+                            📱 Enviar Comprovante via WhatsApp
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+            `}).join('');
+        }
+        
+        function showSection(section) {
+            document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.account-nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById('section-' + section).classList.add('active');
+            document.querySelector(`.account-nav-item:nth-child(${section === 'pedidos' ? 1 : section === 'perfil' ? 2 : 3})`).classList.add('active');
+        }
+        
+        function saveProfile(event) {
+            event.preventDefault();
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            user.name = document.getElementById('profile-name').value;
+            user.phone = document.getElementById('profile-phone').value;
+            user.cpf = document.getElementById('profile-cpf').value;
+            
+            const users = JSON.parse(localStorage.getItem('charmeUsers')) || [];
+            const index = users.findIndex(u => u.id === user.id);
+            if (index !== -1) {
+                users[index] = user;
+                localStorage.setItem('charmeUsers', JSON.stringify(users));
+            }
+            
+            setCurrentUser(user);
+            
+            document.getElementById('sidebar-user-name').textContent = user.name;
+            document.getElementById('sidebar-user-email').textContent = user.email;
+            
+            alert('Perfil atualizado com sucesso!');
+        }
+        
+        function handleLogout() {
+            setCurrentUser(null);
+            window.location.href = 'conta.html';
+        }
+        
+        function sendProofWhatsApp(orderId) {
+            const allOrders = JSON.parse(localStorage.getItem('charmeOrders')) || [];
+            const order = allOrders.find(o => o.id === orderId);
+            
+            if (!order) return;
+            
+            const itemsList = order.items.map(item => {
+                const price = parseFloat(item.price) || 0;
+                const quantity = parseInt(item.quantity) || 1;
+                return `${item.name} - ${quantity}x - R$ ${(price * quantity).toFixed(2).replace('.', ',')}`;
+            }).join('\n');
+            
+            const message = `Oi realizei um pagamento e aki esta o comprovante.`;
+            
+            const whatsappUrl = `https://wa.me/5511912345678?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        function initPage() {
+            updateOrderStatuses();
+            
+            const user = getCurrentUser();
+            
+            if (!user) {
+                document.getElementById('login-required').style.display = 'block';
+                document.getElementById('account-dashboard').style.display = 'none';
+            } else {
+                document.getElementById('login-required').style.display = 'none';
+                document.getElementById('account-dashboard').style.display = 'block';
+                
+                document.getElementById('sidebar-user-name').textContent = user.name;
+                document.getElementById('sidebar-user-email').textContent = user.email;
+                document.getElementById('profile-name').value = user.name || '';
+                document.getElementById('profile-email').value = user.email || '';
+                document.getElementById('profile-phone').value = user.phone || '';
+                document.getElementById('profile-cpf').value = user.cpf || '';
+                
+                renderOrders();
+                renderAddresses();
+            }
+            
+            updateCartCount();
+        }
+        
+        function checkUserLogin() {
+            const currentUser = JSON.parse(localStorage.getItem('charmeCurrentUser'));
+            const welcomeMessage = document.getElementById('welcome-message');
+            const accountLink = document.getElementById('account-link');
+            
+            if (currentUser && welcomeMessage) {
+                const firstName = currentUser.name.split(' ')[0];
+                welcomeMessage.textContent = `Olá, ${firstName}!`;
+                if (accountLink) {
+                    accountLink.textContent = 'Minha Conta';
+                }
+            }
+        }
+        
+        function getUserAddresses() {
+            const user = getCurrentUser();
+            if (!user) return [];
+            const allAddresses = JSON.parse(localStorage.getItem('charmeAddresses')) || [];
+            return allAddresses.filter(a => a.userId === user.id);
+        }
+        
+        function saveAddressToStorage(address) {
+            const allAddresses = JSON.parse(localStorage.getItem('charmeAddresses')) || [];
+            allAddresses.push(address);
+            localStorage.setItem('charmeAddresses', JSON.stringify(allAddresses));
+        }
+        
+        function deleteAddressFromStorage(addressId) {
+            const allAddresses = JSON.parse(localStorage.getItem('charmeAddresses')) || [];
+            const filtered = allAddresses.filter(a => a.id !== addressId);
+            localStorage.setItem('charmeAddresses', JSON.stringify(filtered));
+        }
+        
+        function renderAddresses() {
+            const addresses = getUserAddresses();
+            const container = document.getElementById('addresses-list');
+            
+            if (addresses.length === 0) {
+                container.innerHTML = `
+                    <div class="address-card">
+                        <h4>🏠 Endereço Principal</h4>
+                        <p id="main-address">Nenhum endereço cadastrado</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = addresses.map(addr => `
+                <div class="address-card saved-address">
+                    <button class="delete-address-btn" onclick="deleteAddress(${addr.id})">🗑️</button>
+                    <h4>🏠 ${addr.label || 'Endereço'}</h4>
+                    <p>${addr.street}, ${addr.number}${addr.complement ? ', ' + addr.complement : ''}</p>
+                    <p>${addr.neighborhood} - ${addr.city}/${addr.state}</p>
+                    <p>CEP: ${addr.cep}</p>
+                    ${addr.note ? `<p><em>Obs: ${addr.note}</em></p>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function openAddressModal() {
+            document.getElementById('address-modal').classList.add('show');
+            document.getElementById('address-cep').value = '';
+            document.getElementById('address-street').value = '';
+            document.getElementById('address-number').value = '';
+            document.getElementById('address-complement').value = '';
+            document.getElementById('address-neighborhood').value = '';
+            document.getElementById('address-city').value = '';
+            document.getElementById('address-state').value = '';
+            document.getElementById('address-note').value = '';
+            
+            const cepInput = document.getElementById('address-cep');
+            cepInput.addEventListener('blur', buscaCepAddress);
+            cepInput.addEventListener('input', formatCepAddress);
+        }
+        
+        function closeAddressModal() {
+            document.getElementById('address-modal').classList.remove('show');
+        }
+        
+        async function buscaCepAddress() {
+            const cepInput = document.getElementById('address-cep');
+            const cep = cepInput.value.replace(/\D/g, '');
+            const cepLoading = document.getElementById('address-cep-loading');
+            
+            if (cep.length !== 8) {
+                return;
+            }
+            
+            cepLoading.classList.add('show');
+            
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (!data.erro) {
+                    if (data.uf !== 'SP') {
+                        alert('⚠️ Desculpe, ainda não fazemos entregas nesta região. Realizamos entregas apenas para o estado de São Paulo.');
+                        cepLoading.classList.remove('show');
+                        return;
+                    }
+                    document.getElementById('address-street').value = data.logradouro || '';
+                    document.getElementById('address-neighborhood').value = data.bairro || '';
+                    document.getElementById('address-city').value = data.localidade || '';
+                    document.getElementById('address-state').value = data.uf || '';
+                    document.getElementById('address-number').focus();
+                } else {
+                    alert('CEP não encontrado. Por favor, preencha manualmente.');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar CEP:', error);
+                alert('Erro ao buscar CEP. Por favor, preencha manualmente.');
+            } finally {
+                cepLoading.classList.remove('show');
+            }
+        }
+        
+        function formatCepAddress(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.slice(0, 5) + '-' + value.slice(5, 8);
+            }
+            e.target.value = value;
+        }
+        
+        function saveAddress(event) {
+            event.preventDefault();
+            
+            const user = getCurrentUser();
+            if (!user) {
+                alert('Faça login para adicionar um endereço.');
+                return;
+            }
+            
+            const state = document.getElementById('address-state').value.toUpperCase();
+            
+            if (state !== 'SP') {
+                alert('⚠️ Desculpe, ainda não fazemos entregas nesta região. Realizamos entregas apenas para o estado de São Paulo.');
+                return;
+            }
+            
+            const address = {
+                id: Date.now(),
+                userId: user.id,
+                label: 'Endereço',
+                cep: document.getElementById('address-cep').value,
+                street: document.getElementById('address-street').value,
+                number: document.getElementById('address-number').value,
+                complement: document.getElementById('address-complement').value,
+                neighborhood: document.getElementById('address-neighborhood').value,
+                city: document.getElementById('address-city').value,
+                state: state,
+                note: document.getElementById('address-note').value
+            };
+            
+            if (!address.cep || !address.street || !address.number || !address.neighborhood || !address.city || !address.state) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            saveAddressToStorage(address);
+            closeAddressModal();
+            renderAddresses();
+            alert('Endereço adicionado com sucesso!');
+        }
+        
+        function deleteAddress(addressId) {
+            if (confirm('Tem certeza que deseja excluir este endereço?')) {
+                deleteAddressFromStorage(addressId);
+                renderAddresses();
+                alert('Endereço excluído!');
+            }
+        }
+        
+        setInterval(updateOrderStatuses, 60000);
+        initPage();
+        checkUserLogin();
+        renderAddresses();
+    </script>
+</body>
+</html>
